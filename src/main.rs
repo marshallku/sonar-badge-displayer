@@ -1,10 +1,23 @@
 use env::env::Env;
+use log::info;
+use routes::app::app;
+use tokio::net::TcpListener;
 
 mod env;
+mod routes;
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let env = Env::new();
-    let _ = env::state::AppState::from(env.clone());
+    let state = env::state::AppState::from(env.clone());
+    let app = app().with_state(state);
 
-    println!("Hello, world!");
+    let address = format!("{}:{}", env.host, env.port);
+    let listener = TcpListener::bind(&address).await.unwrap();
+
+    info!("Server running on {}", address);
+
+    axum::serve(listener, app.into_make_service())
+        .await
+        .unwrap();
 }
