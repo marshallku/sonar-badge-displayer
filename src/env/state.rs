@@ -7,9 +7,7 @@ pub struct AppState {
 }
 
 impl AppState {
-    pub fn from_env() -> Self {
-        let env = Env::new();
-
+    pub fn from(env: Env) -> Self {
         Self {
             sonarqube_url: env.sonarqube_url.into_owned(),
             sonarqube_token: env.sonarqube_token.into_owned(),
