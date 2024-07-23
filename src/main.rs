@@ -6,6 +6,7 @@ use tower_http::trace::{self, TraceLayer};
 use tracing::Level;
 use utils::log::trace_layer_on_request;
 
+mod api;
 mod env;
 mod routes;
 mod utils;
