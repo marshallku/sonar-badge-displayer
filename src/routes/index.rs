@@ -1,12 +1,14 @@
 use axum::{
     extract::{Query, State},
-    http::HeaderMap,
     response::IntoResponse,
 };
 use reqwest::StatusCode;
 use serde::Deserialize;
 
-use crate::{api::project_badges::get_project_badges, env::state::AppState};
+use crate::{
+    api::project_badges::get_project_badges, env::state::AppState,
+    utils::http::generate_header_with_age,
+};
 
 #[derive(Deserialize)]
 pub struct BadgeOption {
@@ -15,7 +17,7 @@ pub struct BadgeOption {
 }
 
 pub async fn get(query: Query<BadgeOption>, State(state): State<AppState>) -> impl IntoResponse {
-    let mut headers = HeaderMap::new();
+    let mut headers = generate_header_with_age(3600);
 
     headers.insert("Content-Type", "image/svg+xml".parse().unwrap());
 
@@ -25,4 +27,3 @@ pub async fn get(query: Query<BadgeOption>, State(state): State<AppState>) -> im
 
     (StatusCode::OK, headers, badge).into_response()
 }
-
