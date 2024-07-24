@@ -17,7 +17,7 @@ pub struct BadgeOption {
 }
 
 pub async fn get(query: Query<BadgeOption>, State(state): State<AppState>) -> impl IntoResponse {
-    let mut headers = generate_header_with_age(3600);
+    let mut headers = generate_header_with_age("1h");
 
     headers.insert("Content-Type", "image/svg+xml".parse().unwrap());
 
