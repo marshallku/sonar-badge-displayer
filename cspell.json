@@ -5,6 +5,7 @@
         "autodocs",
         "BUILDKIT",
         "callout",
+        "chrono",
         "codebases",
         "codepoint",
         "codepoints",
@@ -42,5 +43,10 @@
         "WEBP",
         "xlink"
     ],
-    "ignorePaths": ["Cargo.lock", "Cargo.toml", "target", "config/nginx.conf"]
+    "ignorePaths": [
+        "Cargo.lock",
+        "Cargo.toml",
+        "target",
+        "config/nginx.conf"
+    ]
 }

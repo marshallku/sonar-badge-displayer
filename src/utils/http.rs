@@ -1,4 +1,5 @@
 use axum::http::HeaderMap;
+use chrono::{Duration, Utc};
 
 const MINUTES: u64 = 60;
 const HOURS: u64 = 60 * MINUTES;
@@ -18,15 +19,22 @@ pub fn generate_header_with_age(age: &str) -> HeaderMap {
         _ => 0,
     };
 
-    println!("calculated_age: {}", calculated_age);
-
     let cache_age = if calculated_age <= 0 {
         "no-cache".to_string()
     } else {
         format!("public, max-age={}", calculated_age)
     };
 
+    let expires = if calculated_age <= 0 {
+        "0".to_string()
+    } else {
+        let now = Utc::now();
+        let expires = now + Duration::seconds(calculated_age as i64);
+        expires.to_rfc2822()
+    };
+
     headers.insert("Cache-Control", cache_age.parse().unwrap());
+    headers.insert("Expires", expires.parse().unwrap());
 
     headers
 }
