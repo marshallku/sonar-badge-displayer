@@ -20,7 +20,7 @@ FROM base AS builder
 COPY src src
 RUN cargo build --release
 
-FROM alpine:3.14
+FROM alpine:3.20.2
 
 WORKDIR /usr/local/bin
 
