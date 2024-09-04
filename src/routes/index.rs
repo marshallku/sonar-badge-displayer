@@ -21,7 +21,7 @@ pub async fn get(query: Query<BadgeOption>, State(state): State<AppState>) -> im
 
     headers.insert("Content-Type", "image/svg+xml".parse().unwrap());
 
-    let badge = get_project_badges(query.project.to_string(), query.metric.to_string(), &state)
+    let badge = get_project_badges(query.project, query.metric, &state)
         .await
         .unwrap();
 

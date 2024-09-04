@@ -4,8 +4,8 @@ use reqwest::{get, Error};
 use crate::env::state::AppState;
 
 pub async fn get_project_badges(
-    project_name: String,
-    metric: String,
+    project_name: &str,
+    metric: &str,
     state: &AppState,
 ) -> Result<String, Error> {
     let url = format!(
