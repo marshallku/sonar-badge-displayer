@@ -1,7 +1,10 @@
+use std::env::var;
+
 use axum::{
     extract::{Query, State},
     response::IntoResponse,
 };
+
 use reqwest::StatusCode;
 use serde::Deserialize;
 
@@ -21,7 +24,8 @@ pub async fn get(query: Query<BadgeOption>, State(state): State<AppState>) -> im
 
     headers.insert("Content-Type", "image/svg+xml".parse().unwrap());
 
-    let badge = get_project_badges(query.project, query.metric, &state)
+    let token = var(query.project.clone()).unwrap_or("".to_string());
+    let badge = get_project_badges(&query.project, &query.metric, &state.sonarqube_url, &token)
         .await
         .unwrap();
 

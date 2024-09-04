@@ -30,8 +30,23 @@ Sonar Badge Displayer is a Rust-based API that allows you to display SonarQube b
 
 Set the following environment variables:
 
+- `HOST`(optional): The host address to bind the server to (default: `127.0.0.1`)
+- `PORT`(optional): The port to bind the server to (default: `3000`)
 - `SONARQUBE_URL`: Your SonarQube instance URL
-- `SONARQUBE_TOKEN`: Your SonarQube authentication token
+- `<project_key>=<token>`: SonarQube project key and token pairs
+
+Example:
+
+```bash
+SONARQUBE_URL=https://sonarqube.example.com
+marshallku_marshallku-blog-cdn_29a57c5a-bw39-737v-d86a-6af1cv3xqf4c=your_token
+```
+
+This will allow you to access the badge for the `MY_PROJECT` project using the following URL:
+
+```txt
+http://localhost:3000/?project=MY_PROJECT&metric=your_metric
+```
 
 ## API Endpoints
 
