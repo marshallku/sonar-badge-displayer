@@ -18,6 +18,7 @@ RUN mkdir src && \
 FROM base AS builder
 
 COPY src src
+COPY config.yaml config.yaml
 RUN cargo build --release
 
 FROM alpine:3.20.2
@@ -25,6 +26,7 @@ FROM alpine:3.20.2
 WORKDIR /usr/local/bin
 
 COPY --from=builder /usr/src/sonar_badge_displayer/target/release/sonar_badge_displayer .
+COPY --from=builder /usr/src/sonar_badge_displayer/config.yaml .
 
 EXPOSE ${PORT}
 
