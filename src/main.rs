@@ -1,4 +1,4 @@
-use env::app::Env;
+use env::{app::Env, config::set_config_as_env_vars};
 use log::info;
 use routes::app::app;
 use tokio::net::TcpListener;
@@ -17,6 +17,8 @@ async fn main() {
         .with_target(false)
         .compact()
         .init();
+
+    set_config_as_env_vars();
 
     let env = Env::new();
     let state = env::state::AppState::from(env.clone());
